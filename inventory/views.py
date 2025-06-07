@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404 # Added get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST # Added require_POST
+from django.utils import timezone # Added timezone
 from .models import MealItem, MealNameSuggestion
-from .forms import AddMealForm
+from .forms import AddMealForm, EditMealForm # Added EditMealForm
 
 # Create your views here.
 
@@ -41,9 +43,37 @@ def dashboard_view(request):
     else:
         form = AddMealForm()
     
-    meal_items = MealItem.objects.filter(user=request.user).order_by('-date_added', 'meal_name__name')
+    # Query for active meals, ordered by date_added
+    meals = MealItem.objects.filter(user=request.user, date_consumed__isnull=True).order_by('date_added')
+    
     context = {
-        'meal_items': meal_items,
+        'meals': meals, # Changed from meal_items to meals
         'form': form
     }
     return render(request, 'dashboard.html', context)
+
+@login_required
+@require_POST
+def consume_meal_view(request, item_id):
+    meal = get_object_or_404(MealItem, id=item_id, user=request.user) # Ensure user owns the meal
+    meal.date_consumed = timezone.now().date()
+    meal.consumed_by_user = request.user
+    meal.save()
+    return redirect('dashboard')
+
+@login_required
+def edit_meal_view(request, item_id):
+    meal = get_object_or_404(MealItem, id=item_id, user=request.user) # Ensure user owns the meal
+    if request.method == 'POST':
+        form = EditMealForm(request.POST, instance=meal)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = EditMealForm(instance=meal)
+    
+    context = {
+        'form': form,
+        'meal': meal # Pass meal to template for context if needed (e.g., in heading)
+    }
+    return render(request, 'inventory/edit_meal.html', context)
