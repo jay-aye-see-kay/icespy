@@ -16,10 +16,15 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     {% if user.is_authenticated %}
-                        <span class="text-sm text-gray-600">Welcome, {{ user.username }}</span>
-                        <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Logout
-                        </a>
+                        <span class="text-sm text-gray-600 mr-3">Welcome, {{ user.username }}</span>
+                        <a href="{% url 'inventory:dashboard' %}" class="text-sm text-blue-600 hover:text-blue-800">Dashboard</a>
+                        <a href="{% url 'inventory:consumed_history' %}" class="text-sm text-blue-600 hover:text-blue-800">Consumed History</a>
+                        <form method="post" action="{% url 'logout' %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                Logout
+                            </button>
+                        </form>
                     {% else %}
                         <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Login
