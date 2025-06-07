@@ -77,3 +77,15 @@ def edit_meal_view(request, item_id):
         'meal': meal # Pass meal to template for context if needed (e.g., in heading)
     }
     return render(request, 'inventory/edit_meal.html', context)
+
+@login_required
+def consumed_history_view(request):
+    consumed_meals = MealItem.objects.filter(
+        user=request.user, 
+        date_consumed__isnull=False
+    ).order_by('-date_consumed')
+    
+    context = {
+        'consumed_meals': consumed_meals
+    }
+    return render(request, 'inventory/consumed_history.html', context)
