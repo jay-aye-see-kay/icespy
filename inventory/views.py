@@ -37,7 +37,11 @@ def dashboard_view(request):
                 )
             return redirect('inventory:dashboard') # Changed to inventory:dashboard
     else:
-        form = AddMealForm()
+        form = AddMealForm(initial={
+            'date_added': timezone.now().date(),
+            'number_of_containers': 1,
+            'portions_per_container': 2
+        })
     
     # Query for active meals, ordered by date_added
     meals = MealItem.objects.filter(user=request.user, date_consumed__isnull=True).order_by('date_added')
