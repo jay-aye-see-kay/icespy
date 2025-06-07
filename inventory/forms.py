@@ -13,6 +13,9 @@ class EditMealForm(forms.ModelForm):
         model = MealItem
         fields = ['meal_name', 'portions_per_container', 'date_added', 'note']
         widgets = {
+            'meal_name': forms.TextInput(attrs={
+                'list': 'meal-name-suggestions-list' # Add datalist attribute for existing EditMealForm
+            }),
             'date_added': forms.DateInput(attrs={'type': 'date'}),
             'note': forms.Textarea(attrs={'rows': 3}),
         }

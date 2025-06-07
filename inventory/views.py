@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404 # Added get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST # Added require_POST
-from django.utils import timezone # Added timezone
-from .models import MealItem, MealNameSuggestion
-from .forms import AddMealForm, EditMealForm # Added EditMealForm
+from django.views.decorators.http import require_POST
+from django.utils import timezone
+from .models import MealItem
+from .forms import AddMealForm, EditMealForm
 
 # Create your views here.
 
@@ -19,23 +19,15 @@ def dashboard_view(request):
             portions_per_container = form.cleaned_data['portions_per_container']
             note = form.cleaned_data['note']
 
-            meal_name_suggestion, _ = MealNameSuggestion.objects.get_or_create(
-                name=meal_name_str
-            )
-            # If the meal_name_suggestion was created and associated with a user,
-            # or if it existed and you want to ensure it's associated with the current user
-            # (and it's not already associated with another user, which get_or_create handles by not updating if found)
-            # Removed user association logic for MealNameSuggestion
-
             for _ in range(number_of_containers):
                 MealItem.objects.create(
                     user=request.user,
-                    meal_name=meal_name_suggestion,
+                    meal_name=meal_name_str, # Use the string directly
                     date_added=date_added,
                     portions_per_container=portions_per_container,
                     note=note
                 )
-            return redirect('inventory:dashboard') # Changed to inventory:dashboard
+            return redirect('inventory:dashboard')
     else:
         form = AddMealForm(initial={
             'date_added': timezone.now().date(),
@@ -43,12 +35,12 @@ def dashboard_view(request):
             'portions_per_container': 2
         })
     
-    # Query for active meals, ordered by date_added
     meals = MealItem.objects.filter(user=request.user, date_consumed__isnull=True).order_by('date_added')
-    meal_name_suggestions = MealNameSuggestion.objects.values_list('name', flat=True).distinct()
+    # Get distinct meal names from MealItem for the current user
+    meal_name_suggestions = MealItem.objects.filter(user=request.user).values_list('meal_name', flat=True).distinct()
     
     context = {
-        'meals': meals, # Changed from meal_items to meals
+        'meals': meals,
         'form': form,
         'meal_name_suggestions': meal_name_suggestions
     }

@@ -1,20 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.utils import timezone  # Added import
+from django.utils import timezone
 
 User = get_user_model()
 
 
-class MealNameSuggestion(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
 class MealItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    meal_name = models.ForeignKey(MealNameSuggestion, on_delete=models.CASCADE)  # Changed from CharField
+    meal_name = models.CharField(max_length=255)  # Changed from ForeignKey to CharField
     portions_per_container = models.IntegerField()
     date_added = models.DateField()
     note = models.TextField(blank=True, null=True)
@@ -63,4 +56,4 @@ class MealItem(models.Model):
         return ", ".join(age_parts) if age_parts else "Today"
 
     def __str__(self):
-        return str(self.meal_name)  # Updated to return the name of the MealNameSuggestion instance
+        return self.meal_name  # Updated to return the meal_name string directly
