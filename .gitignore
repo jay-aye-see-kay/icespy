@@ -1,3 +1,20 @@
 db.sqlite3
 *.pyc
 __pycache__/
+
+# Generated CSS (Tailwind output)
+static/css/output.css
+
+# Node modules and npm logs
+node_modules/
+npm-debug.log*
+
+# Environment files
+.env
+
+# Static files collection (production)
+staticfiles/
+static_root/
+
+# macOS
+.DS_Store

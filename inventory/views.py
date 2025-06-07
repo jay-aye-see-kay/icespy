@@ -6,4 +6,4 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def dashboard_view(request):
-    return HttpResponse(f"Dashboard for user: {request.user.username}")
+    return render(request, 'dashboard.html')
