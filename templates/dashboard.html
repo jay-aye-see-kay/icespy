@@ -32,7 +32,15 @@
                         {{ form.meal_name.errors }}
                         <input type="text" name="{{ form.meal_name.name }}" id="{{ form.meal_name.id_for_label }}" 
                                class="w-full p-2 border border-gray-300 rounded-md"
-                               value="{{ form.meal_name.value|default_if_none:'' }}">
+                               value="{{ form.meal_name.value|default_if_none:'' }}"
+                               list="meal-name-suggestions-list">
+                        {% if meal_name_suggestions %}
+                        <datalist id="meal-name-suggestions-list">
+                            {% for suggestion in meal_name_suggestions %}
+                                <option value="{{ suggestion }}">
+                            {% endfor %}
+                        </datalist>
+                        {% endif %}
                     </div>
 
                     <div class="mb-4">

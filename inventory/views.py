@@ -45,10 +45,12 @@ def dashboard_view(request):
     
     # Query for active meals, ordered by date_added
     meals = MealItem.objects.filter(user=request.user, date_consumed__isnull=True).order_by('date_added')
+    meal_name_suggestions = MealNameSuggestion.objects.values_list('name', flat=True).distinct()
     
     context = {
         'meals': meals, # Changed from meal_items to meals
-        'form': form
+        'form': form,
+        'meal_name_suggestions': meal_name_suggestions
     }
     return render(request, 'dashboard.html', context)
 
