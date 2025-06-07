@@ -44,7 +44,7 @@ def dashboard_view(request):
         'form': form,
         'meal_name_suggestions': meal_name_suggestions
     }
-    return render(request, 'dashboard.html', context)
+    return render(request, 'inventory/dashboard.html', context)
 
 @login_required
 @require_POST
