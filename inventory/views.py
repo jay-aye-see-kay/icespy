@@ -20,16 +20,12 @@ def dashboard_view(request):
             note = form.cleaned_data['note']
 
             meal_name_suggestion, _ = MealNameSuggestion.objects.get_or_create(
-                name=meal_name_str,
-                defaults={'user': request.user} # Optional: associate suggestion with user
+                name=meal_name_str
             )
             # If the meal_name_suggestion was created and associated with a user,
             # or if it existed and you want to ensure it's associated with the current user
             # (and it's not already associated with another user, which get_or_create handles by not updating if found)
-            if not meal_name_suggestion.user:
-                meal_name_suggestion.user = request.user
-                meal_name_suggestion.save()
-
+            # Removed user association logic for MealNameSuggestion
 
             for _ in range(number_of_containers):
                 MealItem.objects.create(
