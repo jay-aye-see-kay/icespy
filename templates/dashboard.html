@@ -17,7 +17,7 @@
         <!-- Add New Meal Form -->
         <div class="mt-8 max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md border">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Add New Meal</h3>
-            <form method="post" action="{% url 'dashboard' %}">
+            <form method="post" action="{% url 'inventory:dashboard' %}">
                 {% csrf_token %}
                 
                 {% if form.non_field_errors %}
@@ -77,24 +77,40 @@
         <!-- Existing Inventory Display -->
         <div class="mt-12">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Your Inventory</h3>
-            {% if meal_items %}
-                <div class="overflow-x-auto">
+            {% if meals %}
+                <div class="overflow-x-auto bg-white shadow-md rounded-lg">
                     <table class="table w-full">
-                        <thead>
+                        <thead class="bg-gray-50">
                             <tr>
-                                <th>Meal Name</th>
-                                <th>Date Added</th>
-                                <th>Portions</th>
-                                <th>Notes</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Consume</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Meal Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Portions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Added</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edit</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        {% for item in meal_items %}
-                            <tr>
-                                <td>{{ item.meal_name.name }}</td>
-                                <td>{{ item.date_added|date:"Y-m-d" }}</td>
-                                <td>{{ item.portions_per_container }}</td>
-                                <td>{{ item.note|default:"-" }}</td>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                        {% for meal in meals %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form method="post" action="{% url 'inventory:consume_meal' meal.id %}" onsubmit="return confirm('This container of {{ meal.portions_per_container }} portions of {{ meal.meal_name }} will be consumed. Confirm?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-xs btn-outline btn-success">Consume</button>
+                                    </form>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ meal.meal_name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ meal.portions_per_container }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm 
+                                    {% if meal.age_in_days < 60 %}text-green-500
+                                    {% elif meal.age_in_days < 180 %}text-yellow-500
+                                    {% else %}text-red-500{% endif %}">
+                                    {{ meal.age }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ meal.date_added|date:"Y-m-d" }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{% url 'inventory:edit_meal' meal.id %}" class="btn btn-xs btn-outline btn-info">Edit</a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

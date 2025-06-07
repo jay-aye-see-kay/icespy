@@ -35,7 +35,7 @@ def dashboard_view(request):
                     portions_per_container=portions_per_container,
                     note=note
                 )
-            return redirect('dashboard')
+            return redirect('inventory:dashboard') # Changed to inventory:dashboard
     else:
         form = AddMealForm()
     
@@ -55,7 +55,7 @@ def consume_meal_view(request, item_id):
     meal.date_consumed = timezone.now().date()
     meal.consumed_by_user = request.user
     meal.save()
-    return redirect('dashboard')
+    return redirect('inventory:dashboard') # Changed to inventory:dashboard
 
 @login_required
 def edit_meal_view(request, item_id):
@@ -64,7 +64,7 @@ def edit_meal_view(request, item_id):
         form = EditMealForm(request.POST, instance=meal)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')
+            return redirect('inventory:dashboard') # Changed to inventory:dashboard
     else:
         form = EditMealForm(instance=meal)
     
