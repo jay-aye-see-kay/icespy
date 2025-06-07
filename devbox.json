@@ -6,7 +6,7 @@
   ],
   "shell": {
     "init_hook": [
-      ". ./.venv/bin/activate.fish"
+      ". ./.venv/bin/activate"
     ]
   }
 }
