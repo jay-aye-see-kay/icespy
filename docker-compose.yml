@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  icespy:
+    build: 
+      context: .
+      platforms:
+        - linux/amd64
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-change-this-in-production}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1}
+      - DATABASE_PATH=/app/data/db.sqlite3
+      - STATIC_ROOT=/app/static
+      - MEDIA_ROOT=/app/data/media
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      # Optional: Create superuser on first run
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME:-}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL:-}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD:-}
+    volumes:
+      - icespy_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  icespy_data:
+    driver: local
