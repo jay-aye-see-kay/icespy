@@ -26,57 +26,7 @@
                     </div>
                 {% endif %}
 
-                <div>
-                    <div class="mb-4">
-                        <label for="{{ form.meal_name.id_for_label }}">Meal Name</label>
-                        {{ form.meal_name.errors }}
-                        <input type="text" name="{{ form.meal_name.name }}" id="{{ form.meal_name.id_for_label }}" 
-                               class="w-full p-2 border border-gray-300 rounded-md"
-                               value="{{ form.meal_name.value|default_if_none:'' }}"
-                               list="meal-name-suggestions-list">
-                        {% if meal_name_suggestions %}
-                        <datalist id="meal-name-suggestions-list">
-                            {% for suggestion in meal_name_suggestions %}
-                                <option value="{{ suggestion }}">
-                            {% endfor %}
-                        </datalist>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="{{ form.date_added.id_for_label }}">Date Added</label>
-                        {{ form.date_added.errors }}
-                        <input type="date" name="{{ form.date_added.name }}" id="{{ form.date_added.id_for_label }}" 
-                               class="w-full p-2 border border-gray-300 rounded-md"
-                               value="{{ form.date_added.value|default_if_none:''|date:'Y-m-d' }}">
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label for="{{ form.number_of_containers.id_for_label }}">Number of Containers</label>
-                            {{ form.number_of_containers.errors }}
-                            <input type="number" name="{{ form.number_of_containers.name }}" id="{{ form.number_of_containers.id_for_label }}" 
-                                   min="1" 
-                                   class="w-full p-2 border border-gray-300 rounded-md"
-                                   value="{{ form.number_of_containers.value|default_if_none:'' }}">
-                        </div>
-                        <div>
-                            <label for="{{ form.portions_per_container.id_for_label }}">Portions per Container</label>
-                            {{ form.portions_per_container.errors }}
-                            <input type="number" name="{{ form.portions_per_container.name }}" id="{{ form.portions_per_container.id_for_label }}" 
-                                   min="1" 
-                                   class="w-full p-2 border border-gray-300 rounded-md"
-                                   value="{{ form.portions_per_container.value|default_if_none:'' }}">
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="{{ form.note.id_for_label }}">Note (Optional)</label>
-                        {{ form.note.errors }}
-                        <textarea name="{{ form.note.name }}" id="{{ form.note.id_for_label }}" rows="3"
-                                  class="w-full p-2 border border-gray-300 rounded-md">{{ form.note.value|default_if_none:'' }}</textarea>
-                    </div>
-                </div>
+                {{ form.as_p }}
 
                 <div class="mt-6">
                     <button type="submit" class="w-full p-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white font-bold">Add Meal</button>
