@@ -3,79 +3,136 @@
 {% block title %}Dashboard - IceSpy{% endblock %}
 
 {% block content %}
-<div>
-    <div>
-        <div>
-            <h2>
-                Welcome to your Dashboard, {{ user.username }}!
-            </h2>
-            <p>
-                Manage your inventory with ease using IceSpy.
-            </p>
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-light">
+            <h2 class="display-4">Welcome to your Dashboard, {{ user.username }}!</h2>
+            <p class="lead">Manage your inventory with ease using IceSpy.</p>
         </div>
 
         <!-- Add New Meal Form -->
-        <div>
-            <h3>Add New Meal</h3>
-            <form method="post" action="{% url 'inventory:dashboard' %}">
-                {% csrf_token %}
-                
-                {% if form.non_field_errors %}
-                    <div>
-                        {{ form.non_field_errors }}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0">Add New Meal</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'inventory:dashboard' %}">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.meal_name.id_for_label }}">{{ form.meal_name.label }}</label>
+                        {{ form.meal_name }}
+                        {% if form.meal_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.meal_name.errors }}
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
 
-                {{ form.as_p }}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="{{ form.date_added.id_for_label }}">{{ form.date_added.label }}</label>
+                            {{ form.date_added }}
+                            {% if form.date_added.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.date_added.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
 
-                <div>
-                    <button type="submit">Add Meal</button>
-                </div>
-            </form>
+                        <div class="form-group col-md-6">
+                            <label for="{{ form.number_of_containers.id_for_label }}">{{ form.number_of_containers.label }}</label>
+                            {{ form.number_of_containers }}
+                            {% if form.number_of_containers.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.number_of_containers.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.portions_per_container.id_for_label }}">{{ form.portions_per_container.label }}</label>
+                        {{ form.portions_per_container }}
+                        {% if form.portions_per_container.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.portions_per_container.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.note.id_for_label }}">{{ form.note.label }}</label>
+                        {{ form.note }}
+                        {% if form.note.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.note.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Meal</button>
+                </form>
+            </div>
         </div>
 
         <!-- Existing Inventory Display -->
-        <div>
-            <h3>Your Inventory</h3>
-            {% if meals %}
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Consume</th>
-                                <th>Meal Name</th>
-                                <th>Portions</th>
-                                <th>Age</th>
-                                <th>Date Added</th>
-                                <th>Edit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for meal in meals %}
-                            <tr>
-                                <td>
-                                    <form method="post" action="{% url 'inventory:consume_meal' meal.id %}" onsubmit="return confirm('This container of {{ meal.portions_per_container }} portions of {{ meal.meal_name }} will be consumed. Confirm?');">
-                                        {% csrf_token %}
-                                        <button type="submit">Consume</button>
-                                    </form>
-                                </td>
-                                <td>{{ meal.meal_name }}</td>
-                                <td>{{ meal.portions_per_container }}</td>
-                                <td>{{ meal.age }}</td>
-                                <td>{{ meal.date_added|date:"Y-m-d" }}</td>
-                                <td>
-                                    <a href="{% url 'inventory:edit_meal' meal.id %}">Edit</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <p>You have no meal items in your inventory yet. Add one above!</p>
-            {% endif %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Your Inventory</h3>
+            </div>
+            <div class="card-body">
+                {% if meals %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Consume</th>
+                                    <th>Meal Name</th>
+                                    <th>Portions</th>
+                                    <th>Age</th>
+                                    <th>Date Added</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for meal in meals %}
+                                <tr>
+                                    <td>
+                                        <form method="post" action="{% url 'inventory:consume_meal' meal.id %}" onsubmit="return confirm('This container of {{ meal.portions_per_container }} portions of {{ meal.meal_name }} will be consumed. Confirm?');" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-warning">Consume</button>
+                                        </form>
+                                    </td>
+                                    <td>{{ meal.meal_name }}</td>
+                                    <td>
+                                        <span class="badge badge-secondary">{{ meal.portions_per_container }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-info">{{ meal.age }}</span>
+                                    </td>
+                                    <td>{{ meal.date_added|date:"Y-m-d" }}</td>
+                                    <td>
+                                        <a href="{% url 'inventory:edit_meal' meal.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <p class="mb-0">You have no meal items in your inventory yet. Add one above!</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-
     </div>
 </div>
 {% endblock %}

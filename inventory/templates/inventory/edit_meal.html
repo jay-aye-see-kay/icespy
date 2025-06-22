@@ -3,30 +3,75 @@
 {% block title %}Edit Meal - {{ block.super }}{% endblock %}
 
 {% block content %}
-<div>
-    <div>
-        <h1>Edit Meal: {{ meal.meal_name }}</h1>
-
-        <form method="post">
-            {% csrf_token %}
-            
-            {% if form.non_field_errors %}
-                <div>
-                    {{ form.non_field_errors }}
-                </div>
-            {% endif %}
-
-            {{ form.as_p }}
-
-            <div>
-                <button type="submit">
-                    Save Changes
-                </button>
-                <a href="{% url 'inventory:dashboard' %}">
-                    Cancel
-                </a>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h4 mb-0">Edit Meal: {{ meal.meal_name }}</h1>
             </div>
-        </form>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.meal_name.id_for_label }}">{{ form.meal_name.label }}</label>
+                        {{ form.meal_name }}
+                        {% if form.meal_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.meal_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="{{ form.portions_per_container.id_for_label }}">{{ form.portions_per_container.label }}</label>
+                            {{ form.portions_per_container }}
+                            {% if form.portions_per_container.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.portions_per_container.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="{{ form.date_added.id_for_label }}">{{ form.date_added.label }}</label>
+                            {{ form.date_added }}
+                            {% if form.date_added.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.date_added.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.note.id_for_label }}">{{ form.note.label }}</label>
+                        {{ form.note }}
+                        {% if form.note.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.note.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+                        <a href="{% url 'inventory:dashboard' %}" class="btn btn-secondary ml-2">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

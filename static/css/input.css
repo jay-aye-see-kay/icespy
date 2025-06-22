@@ -1,3 +1,66 @@
-/* Base styles - Tailwind removed, ready for custom styles */
+/* Custom styles to enhance Bootstrap */
 
-/* Reset and basic styling will be added later */
+/* Enhance table styling */
+.table th {
+    border-top: none;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Button enhancements */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Card shadows */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+/* Jumbotron alternative styling */
+.jumbotron {
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+}
+
+/* Navigation enhancements */
+.navbar-brand h1 {
+    font-weight: 600;
+}
+
+/* Form styling */
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Badge styling */
+.badge {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 0.375rem;
+}
+
+/* Responsive text */
+@media (max-width: 576px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .h2 {
+        font-size: 1.5rem;
+    }
+}

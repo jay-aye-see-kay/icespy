@@ -1,102 +1,77 @@
-{% extends 'bas        
-        <form method="post" action="{% url 'login' %}"            <div>
-                <button type="submit">
-                    <span>
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </span>
-                    Sign in
-                </button>
-            </div>{% block title %}Login - IceSpy{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Login - IceSpy{% endblock %}
 
 {% block content %}
-<div>
-    <div>
-        <div>
-            <h2>
-                Sign in to your account
-            </h2>
-            <p>
-                Access your IceSpy inventory dashboard
-            </p>
-        </div>
-        
-        <form class="mt-8 space-y-6" method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            
-            {% if form.errors %}
-                <div>
-                    <div>
-                        <div>
-                            <h3>
-                                Please correct the errors below
-                            </h3>
-                            <div>
-                                <ul>
-                                    {% for field, errors in form.errors.items %}
-                                        {% for error in errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h2 class="h4">Sign in to your account</h2>
+                    <p class="text-muted">Access your IceSpy inventory dashboard</p>
+                </div>
+                
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <h6 class="alert-heading">Please correct the errors below</h6>
+                            <ul class="mb-0">
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
                                     {% endfor %}
-                                </ul>
-                            </div>
+                                {% endfor %}
+                            </ul>
                         </div>
-                    </div>
-                </div>
-            {% endif %}
+                    {% endif %}
 
-            {% if next %}
-                {% if user.is_authenticated %}
-                    <div>
-                        <p>
-                            Your account doesn't have access to this page. To proceed,
-                            please login with an account that has access.
-                        </p>
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                            <div class="alert alert-warning">
+                                <p class="mb-0">
+                                    Your account doesn't have access to this page. To proceed,
+                                    please login with an account that has access.
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <p class="mb-0">Please login to see this page.</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}">Username</label>
+                        <input id="{{ form.username.id_for_label }}" 
+                               name="{{ form.username.name }}" 
+                               type="text" 
+                               class="form-control"
+                               required 
+                               placeholder="Username"
+                               value="{{ form.username.value|default:'' }}">
                     </div>
-                {% else %}
-                    <div>
-                        <p>
-                            Please login to see this page.
-                        </p>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}">Password</label>
+                        <input id="{{ form.password.id_for_label }}" 
+                               name="{{ form.password.name }}" 
+                               type="password" 
+                               class="form-control"
+                               required 
+                               placeholder="Password">
                     </div>
-                {% endif %}
-            {% endif %}
-            
-            <div>
-                <div>
-                    <label for="{{ form.username.id_for_label }}">Username</label>
-                    <input id="{{ form.username.id_for_label }}" 
-                           name="{{ form.username.name }}" 
-                           type="text" 
-                           required 
-                           placeholder="Username"
-                           value="{{ form.username.value|default:'' }}">
-                </div>
-                <div>
-                    <label for="{{ form.password.id_for_label }}">Password</label>
-                    <input id="{{ form.password.id_for_label }}" 
-                           name="{{ form.password.name }}" 
-                           type="password" 
-                           required 
-                           placeholder="Password">
-                </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Sign in
+                    </button>
+
+                    <input type="hidden" name="next" value="{{ next }}">
+                </form>
             </div>
-
-            <div>
-                <button type="submit" 
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </span>
-                    Sign in
-                </button>
-            </div>
-
-            <input type="hidden" name="next" value="{{ next }}">
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}
