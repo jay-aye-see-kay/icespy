@@ -5,54 +5,6 @@
       "last_modified": "2025-06-02T09:36:13Z",
       "resolved": "github:NixOS/nixpkgs/e4b09e47ace7d87de083786b404bf232eb6c89d8?lastModified=1748856973&narHash=sha256-RlTsJUvvr8ErjPBsiwrGbbHYW8XbB%2Foek0Gi78XdWKg%3D"
     },
-    "tailwindcss_4@latest": {
-      "last_modified": "2025-05-16T20:19:48Z",
-      "resolved": "github:NixOS/nixpkgs/12a55407652e04dcf2309436eb06fef0d3713ef3#tailwindcss_4",
-      "source": "devbox-search",
-      "version": "4.1.7",
-      "systems": {
-        "aarch64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/dj5b2aldj2sv50kzbqxj2x9962ajh207-tailwindcss_4-4.1.7",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/dj5b2aldj2sv50kzbqxj2x9962ajh207-tailwindcss_4-4.1.7"
-        },
-        "aarch64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/bk4964wyp9w41f9mjnnmnc6kr70ircrh-tailwindcss_4-4.1.7",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/bk4964wyp9w41f9mjnnmnc6kr70ircrh-tailwindcss_4-4.1.7"
-        },
-        "x86_64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/2dxgd64421azhmwp63h9h3hzczgvh9w7-tailwindcss_4-4.1.7",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/2dxgd64421azhmwp63h9h3hzczgvh9w7-tailwindcss_4-4.1.7"
-        },
-        "x86_64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/pz66szjlv92qihr7m113i3wbyq6m1gfp-tailwindcss_4-4.1.7",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/pz66szjlv92qihr7m113i3wbyq6m1gfp-tailwindcss_4-4.1.7"
-        }
-      }
-    },
     "uv@latest": {
       "last_modified": "2025-05-24T21:46:02Z",
       "resolved": "github:NixOS/nixpkgs/edb3633f9100d9277d1c9af245a4e9337a980c07#uv",

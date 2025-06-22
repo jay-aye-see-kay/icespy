@@ -3,40 +3,40 @@
 {% block title %}Consumed Meal History - {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">Consumed Meal History</h1>
+<div>
+    <h1>Consumed Meal History</h1>
 
     {% if consumed_meals %}
-        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
-            <table class="table w-full">
-                <thead class="bg-gray-50">
+        <div>
+            <table>
+                <thead>
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Meal Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Portions</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Added</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Consumed</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Consumed By</th>
+                        <th>Meal Name</th>
+                        <th>Portions</th>
+                        <th>Date Added</th>
+                        <th>Date Consumed</th>
+                        <th>Consumed By</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody>
                     {% for meal in consumed_meals %}
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ meal.meal_name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ meal.portions_per_container }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ meal.date_added|date:"Y-m-d" }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ meal.date_consumed|date:"Y-m-d" }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ meal.consumed_by_user.username|default:"N/A" }}</td>
+                        <tr>
+                            <td>{{ meal.meal_name }}</td>
+                            <td>{{ meal.portions_per_container }}</td>
+                            <td>{{ meal.date_added|date:"Y-m-d" }}</td>
+                            <td>{{ meal.date_consumed|date:"Y-m-d" }}</td>
+                            <td>{{ meal.consumed_by_user.username|default:"N/A" }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     {% else %}
-        <p class="text-center text-gray-500 py-10">You haven't consumed any meals yet.</p>
+        <p>You haven't consumed any meals yet.</p>
     {% endif %}
 
-    <div class="mt-8 text-center">
-        <a href="{% url 'inventory:dashboard' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    <div>
+        <a href="{% url 'inventory:dashboard' %}">
             Back to Dashboard
         </a>
     </div>

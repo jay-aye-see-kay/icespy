@@ -5,28 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}IceSpy - Inventory Management{% endblock %}</title>
     {% load static %}
-    <link href="{% static 'css/output.css' %}" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-900">
-    <nav class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-primary">IceSpy</h1>
+<body>
+    <nav>
+        <div>
+            <div>
+                <div>
+                    <h1>IceSpy</h1>
                 </div>
-                <div class="flex items-center space-x-4">
+                <div>
                     {% if user.is_authenticated %}
-                        <span class="text-sm text-gray-600 mr-3">Welcome, {{ user.username }}</span>
-                        <a href="{% url 'inventory:dashboard' %}" class="text-sm text-blue-600 hover:text-blue-800">Dashboard</a>
-                        <a href="{% url 'inventory:consumed_history' %}" class="text-sm text-blue-600 hover:text-blue-800">Consumed History</a>
-                        <form method="post" action="{% url 'logout' %}" class="inline">
+                        <span>Welcome, {{ user.username }}</span>
+                        <a href="{% url 'inventory:dashboard' %}">Dashboard</a>
+                        <a href="{% url 'inventory:consumed_history' %}">Consumed History</a>
+                        <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <button type="submit">
                                 Logout
                             </button>
                         </form>
                     {% else %}
-                        <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <a href="{% url 'login' %}">
                             Login
                         </a>
                     {% endif %}
@@ -35,7 +34,7 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <main>
         {% block content %}
         {% endblock %}
     </main>

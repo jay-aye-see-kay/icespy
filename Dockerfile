@@ -10,9 +10,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app
 
 # Install system dependencies and setup in one layer
-RUN curl -sLo /usr/local/bin/tailwindcss https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.8/tailwindcss-linux-x64 && \
-    chmod +x /usr/local/bin/tailwindcss && \
-    groupadd -r django && useradd -r -g django django
+RUN groupadd -r django && useradd -r -g django django
 
 # Set working directory
 WORKDIR /app
@@ -24,7 +22,6 @@ RUN uv sync --frozen --no-cache
 # Copy application code and setup
 COPY . .
 RUN chmod +x docker-entrypoint.sh && \
-    tailwindcss -i static/css/input.css -o static/css/output.css --minify && \
     mkdir -p /app/data /app/static /app/media && \
     chown -R django:django /app
 

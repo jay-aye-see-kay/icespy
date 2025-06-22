@@ -1,15 +1,23 @@
-{% extends 'base.html' %}
-
-{% block title %}Login - IceSpy{% endblock %}
+{% extends 'bas        
+        <form method="post" action="{% url 'login' %}"            <div>
+                <button type="submit">
+                    <span>
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </span>
+                    Sign in
+                </button>
+            </div>{% block title %}Login - IceSpy{% endblock %}
 
 {% block content %}
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+<div>
+    <div>
         <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2>
                 Sign in to your account
             </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
+            <p>
                 Access your IceSpy inventory dashboard
             </p>
         </div>
@@ -18,14 +26,14 @@
             {% csrf_token %}
             
             {% if form.errors %}
-                <div class="rounded-md bg-red-50 p-4">
-                    <div class="flex">
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-red-800">
+                <div>
+                    <div>
+                        <div>
+                            <h3>
                                 Please correct the errors below
                             </h3>
-                            <div class="mt-2 text-sm text-red-700">
-                                <ul class="list-disc pl-5 space-y-1">
+                            <div>
+                                <ul>
                                     {% for field, errors in form.errors.items %}
                                         {% for error in errors %}
                                             <li>{{ error }}</li>
@@ -40,39 +48,37 @@
 
             {% if next %}
                 {% if user.is_authenticated %}
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <p class="text-sm text-yellow-700">
+                    <div>
+                        <p>
                             Your account doesn't have access to this page. To proceed,
                             please login with an account that has access.
                         </p>
                     </div>
                 {% else %}
-                    <div class="rounded-md bg-blue-50 p-4">
-                        <p class="text-sm text-blue-700">
+                    <div>
+                        <p>
                             Please login to see this page.
                         </p>
                     </div>
                 {% endif %}
             {% endif %}
             
-            <div class="rounded-md shadow-sm -space-y-px">
+            <div>
                 <div>
-                    <label for="{{ form.username.id_for_label }}" class="sr-only">Username</label>
+                    <label for="{{ form.username.id_for_label }}">Username</label>
                     <input id="{{ form.username.id_for_label }}" 
                            name="{{ form.username.name }}" 
                            type="text" 
                            required 
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                            placeholder="Username"
                            value="{{ form.username.value|default:'' }}">
                 </div>
                 <div>
-                    <label for="{{ form.password.id_for_label }}" class="sr-only">Password</label>
+                    <label for="{{ form.password.id_for_label }}">Password</label>
                     <input id="{{ form.password.id_for_label }}" 
                            name="{{ form.password.name }}" 
                            type="password" 
                            required 
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                            placeholder="Password">
                 </div>
             </div>
